@@ -348,9 +348,9 @@ body{background:var(--bg);color:var(--text);font-family:'Share Tech Mono',monosp
 // Hierarquia do truco (do mais forte para o mais fraco)
 // 4♣ > 7♥ > A♠ > 7♦ > 3 > 2 > A > K > J > Q > 7 > 6 > 5 > 4
 const MANILHA_ORDER = ['4♣','7♥','A♠','7♦'];
-const RANK_ORDER    = ['3','2','A','K','J','Q','7','6','5','4'];
+const RANK_ORDER    = ['3','2','A','K','J','Q','7']; // 4 só como manilha Zap
 const SUITS         = ['♠','♥','♦','♣'];
-const RANKS         = ['4','5','6','7','Q','J','K','A','2','3'];
+const RANKS         = ['7','Q','J','K','A','2','3']; // 4 só existe como Zap (manilha)
 
 // ── Variáveis (Cap 11) ──
 // inteiro, logico, cadeia, real
@@ -443,6 +443,8 @@ function criarBaralho(){
       d.push({rank:r, suit:s, str: r+s});
     }
   }
+  // O 4 só existe como Zap (4♣) — única carta do rank 4 no baralho
+  d.push({rank:'4', suit:'♣', str:'4♣'});
   return d;
 }
 
@@ -470,19 +472,30 @@ function forcaCarta(c){
 // ── RENDER CARTAS ──
 // ============================================================
 const SUIT_COLOR = {'♥':'#ef4444','♦':'#ef4444','♠':'#e2e8f0','♣':'#e2e8f0'};
-const MANILHA_BG = {'4♣':'#14532d','7♥':'#7f1d1d','A♠':'#1e1b4b','7♦':'#78350f'};
+const MANILHA_META = {
+  '4♣': { nome:'ZAP',       bg:'#052e16', brd:'#4ade80', glow:'#4ade80', rankCol:'#4ade80' },
+  '7♥': { nome:'COPAS',     bg:'#450a0a', brd:'#f87171', glow:'#f87171', rankCol:'#f87171' },
+  'A♠': { nome:'ESPADILHA', bg:'#0c1445', brd:'#818cf8', glow:'#818cf8', rankCol:'#818cf8' },
+  '7♦': { nome:'OUROS',     bg:'#431407', brd:'#fb923c', glow:'#fb923c', rankCol:'#fb923c' },
+};
 
 function cardHTML(c, isHand=false, idx=0, played=false){
   const isManilha = MANILHA_ORDER.includes(c.str);
-  const bg  = isManilha ? MANILHA_BG[c.str] : '#1e2d40';
-  const brd = isManilha ? 'var(--gold)' : '#334155';
-  const col = SUIT_COLOR[c.suit] || '#fff';
-  const cls = isHand ? `card-hand${played?' played':''}` : 'card-played';
+  const meta = MANILHA_META[c.str];
+  const bg   = isManilha ? meta.bg   : '#1e2d40';
+  const brd  = isManilha ? meta.brd  : '#334155';
+  const col  = isManilha ? meta.rankCol : (SUIT_COLOR[c.suit] || '#fff');
+  const cls  = isHand ? `card-hand${played?' played':''}` : 'card-played';
   const click = isHand && !played ? `onclick="jogarCarta(${idx})"` : '';
-  const manTag = isManilha ? `<div style="position:absolute;top:2px;right:3px;font-size:7px;color:var(--gold)">★</div>` : '';
-  return `<div class="${cls}" style="background:${bg};border-color:${brd};" ${click}>
+  const rank_pos = MANILHA_ORDER.indexOf(c.str) + 1;
+  const manTag = isManilha
+    ? `<div style="position:absolute;top:2px;left:0;right:0;text-align:center;font-size:6px;font-family:'Orbitron',sans-serif;color:${meta.brd};letter-spacing:0.5px;text-shadow:0 0 4px ${meta.glow};">${meta.nome}</div>
+       <div style="position:absolute;bottom:2px;right:3px;font-size:7px;color:${meta.brd};font-weight:700;">#${rank_pos}</div>`
+    : '';
+  const glowStyle = isManilha ? `box-shadow:0 0 10px ${meta.glow}66,0 4px 12px #000a;border-width:2px;` : '';
+  return `<div class="${cls}" style="background:${bg};border-color:${brd};${glowStyle}" ${click}>
     ${manTag}
-    <div class="c-rank" style="color:${col}">${c.rank}</div>
+    <div class="c-rank" style="color:${col};${isManilha?'margin-top:10px;':''}">${c.rank}</div>
     <div class="c-suit" style="color:${col}">${c.suit}</div>
   </div>`;
 }
