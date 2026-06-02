@@ -29,27 +29,27 @@ body{background:var(--bg);color:var(--text);font-family:'Share Tech Mono',monosp
 
 /* ── LAYOUT ── */
 #root{display:flex;flex-direction:column;height:100vh;}
-#header{display:flex;align-items:center;justify-content:space-between;padding:6px 16px;background:var(--bg2);border-bottom:1px solid #1e3a5f;flex-shrink:0;}
+#header{display:flex;align-items:center;justify-content:space-between;padding:10px 20px;background:var(--bg2);border-bottom:1px solid #1e3a5f;flex-shrink:0;}
 #body{display:flex;flex:1;overflow:hidden;}
-#code-panel{width:240px;flex-shrink:0;background:var(--bg2);border-right:1px solid #1e3a5f;overflow-y:auto;display:flex;flex-direction:column;}
+#code-panel{width:300px;flex-shrink:0;background:var(--bg2);border-right:1px solid #1e3a5f;overflow-y:auto;display:flex;flex-direction:column;}
 #game-area{flex:1;display:flex;flex-direction:column;overflow:hidden;}
-#concept-panel{width:220px;flex-shrink:0;background:var(--bg2);border-left:1px solid #1e3a5f;overflow-y:auto;}
+#concept-panel{width:280px;flex-shrink:0;background:var(--bg2);border-left:1px solid #1e3a5f;overflow-y:auto;}
 
 /* ── HEADER ── */
-.title{font-family:'Orbitron',sans-serif;font-size:14px;font-weight:900;color:var(--gold);text-shadow:0 0 12px var(--gold)88;letter-spacing:3px;}
-.score-box{display:flex;gap:20px;}
+.title{font-family:'Orbitron',sans-serif;font-size:22px;font-weight:900;color:var(--gold);text-shadow:0 0 12px var(--gold)88;letter-spacing:3px;}
+.score-box{display:flex;gap:30px;}
 .score-item{text-align:center;}
-.score-label{font-size:8px;color:var(--dim);letter-spacing:2px;}
-.score-val{font-size:16px;font-weight:700;}
-.state-badge{font-family:'Orbitron',sans-serif;font-size:9px;padding:3px 10px;border-radius:3px;letter-spacing:2px;}
+.score-label{font-size:13px;color:var(--dim);letter-spacing:2px;}
+.score-val{font-size:28px;font-weight:700;}
+.state-badge{font-family:'Orbitron',sans-serif;font-size:14px;padding:5px 14px;border-radius:3px;letter-spacing:2px;}
 .state-MENU{background:#1e3a5f;color:var(--cyan);border:1px solid var(--cyan)66;}
 .state-JOGANDO{background:#14532d;color:var(--green);border:1px solid var(--green)66;}
 .state-TRUCO{background:#7c2d12;color:var(--orange);border:1px solid var(--orange)66;}
 .state-FIM{background:#4a1d96;color:var(--purple);border:1px solid var(--purple)66;}
 
 /* ── CODE PANEL ── */
-.code-title{font-family:'Orbitron',sans-serif;font-size:9px;color:var(--cyan);padding:8px 10px 4px;border-bottom:1px solid #1e3a5f;letter-spacing:2px;}
-.code-block{background:#0d1117;margin:6px 8px;border-radius:4px;padding:8px;border-left:2px solid var(--cyan);font-size:9px;line-height:1.7;}
+.code-title{font-family:'Orbitron',sans-serif;font-size:13px;color:var(--cyan);padding:8px 10px 4px;border-bottom:1px solid #1e3a5f;letter-spacing:2px;}
+.code-block{background:#0d1117;margin:6px 8px;border-radius:4px;padding:8px;border-left:2px solid var(--cyan);font-size:13px;line-height:1.8;}
 .code-block.active-concept{border-left-color:var(--gold);background:#1a1600;animation:highlight-pulse 1s ease-in-out;}
 @keyframes highlight-pulse{0%{background:#1a1600;}50%{background:#2a2400;}100%{background:#1a1600;}
 }
@@ -65,40 +65,40 @@ body{background:var(--bg);color:var(--text);font-family:'Share Tech Mono',monosp
 #canvas-wrap{flex:1;position:relative;}
 #canvas{display:block;width:100%;height:100%;}
 
-#game-ui{position:absolute;inset:0;display:flex;flex-direction:column;justify-content:space-between;padding:10px 16px;}
+#game-ui{position:absolute;inset:0;display:flex;flex-direction:column;justify-content:space-between;padding:14px 22px;}
 
 /* Placar rodada */
 .round-bar{display:flex;justify-content:space-between;align-items:center;}
-.round-info{font-family:'Orbitron',sans-serif;font-size:11px;color:var(--gold);}
+.round-info{font-family:'Orbitron',sans-serif;font-size:18px;color:var(--gold);}
 .lives-row{display:flex;gap:4px;}
-.life-heart{font-size:14px;filter:drop-shadow(0 0 4px var(--magenta));}
-.life-empty{font-size:14px;opacity:.2;}
+.life-heart{font-size:22px;filter:drop-shadow(0 0 4px var(--magenta));}
+.life-empty{font-size:22px;opacity:.2;}
 
 /* Cartas do bot */
-.bot-row{display:flex;justify-content:center;gap:8px;}
-.card-back{width:52px;height:74px;background:linear-gradient(135deg,#1e3a5f,#0f1923);border:1px solid #2a4a6f;border-radius:6px;display:flex;align-items:center;justify-content:center;font-size:20px;box-shadow:0 4px 12px #000a;}
+.bot-row{display:flex;justify-content:center;gap:12px;}
+.card-back{width:80px;height:114px;background:linear-gradient(135deg,#1e3a5f,#0f1923);border:1px solid #2a4a6f;border-radius:6px;display:flex;align-items:center;justify-content:center;font-size:20px;box-shadow:0 4px 12px #000a;}
 
 /* Mesa de jogo */
-.table-row{display:flex;justify-content:center;align-items:center;gap:24px;}
-.played-slot{width:60px;height:84px;border:1px dashed #1e3a5f44;border-radius:6px;display:flex;align-items:center;justify-content:center;position:relative;}
-.played-slot .slot-label{position:absolute;bottom:-16px;font-size:8px;color:var(--dim);text-align:center;width:100%;}
-.card-played{width:56px;height:80px;border-radius:5px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:2px;border:1px solid #333;box-shadow:0 4px 16px #000c;font-family:'Orbitron',sans-serif;}
-.card-played .c-rank{font-size:20px;font-weight:900;}
-.card-played .c-suit{font-size:16px;}
+.table-row{display:flex;justify-content:center;align-items:center;gap:36px;}
+.played-slot{width:92px;height:126px;border:1px dashed #1e3a5f44;border-radius:6px;display:flex;align-items:center;justify-content:center;position:relative;}
+.played-slot .slot-label{position:absolute;bottom:-20px;font-size:13px;color:var(--dim);text-align:center;width:100%;}
+.card-played{width:86px;height:120px;border-radius:5px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:2px;border:1px solid #333;box-shadow:0 4px 16px #000c;font-family:'Orbitron',sans-serif;}
+.card-played .c-rank{font-size:32px;font-weight:900;}
+.card-played .c-suit{font-size:24px;}
 .card-played.winner{box-shadow:0 0 16px var(--gold),0 4px 16px #000c;border-color:var(--gold);}
 
 /* Cartas do jogador */
-.player-row{display:flex;justify-content:center;gap:8px;}
-.card-hand{width:58px;height:82px;border-radius:6px;cursor:pointer;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:2px;transition:all .2s;border:1px solid #333;font-family:'Orbitron',sans-serif;box-shadow:0 4px 12px #000a;position:relative;}
+.player-row{display:flex;justify-content:center;gap:12px;}
+.card-hand{width:90px;height:126px;border-radius:6px;cursor:pointer;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:2px;transition:all .2s;border:1px solid #333;font-family:'Orbitron',sans-serif;box-shadow:0 4px 12px #000a;position:relative;}
 .card-hand:hover:not(.disabled){transform:translateY(-12px);box-shadow:0 12px 24px #000c,0 0 12px var(--cyan)44;border-color:var(--cyan);}
 .card-hand.disabled{opacity:.4;cursor:not-allowed;pointer-events:none;}
 .card-hand.played{opacity:.25;transform:translateY(4px);cursor:not-allowed;pointer-events:none;}
-.card-hand .c-rank{font-size:18px;font-weight:900;}
-.card-hand .c-suit{font-size:14px;}
+.card-hand .c-rank{font-size:28px;font-weight:900;}
+.card-hand .c-suit{font-size:20px;}
 
 /* Action buttons */
-.action-row{display:flex;justify-content:center;gap:10px;flex-wrap:wrap;}
-.btn{background:transparent;border-radius:4px;font-family:'Share Tech Mono',monospace;font-size:10px;padding:6px 14px;cursor:pointer;transition:all .2s;letter-spacing:1px;}
+.action-row{display:flex;justify-content:center;gap:14px;flex-wrap:wrap;}
+.btn{background:transparent;border-radius:4px;font-family:'Share Tech Mono',monospace;font-size:16px;padding:10px 22px;cursor:pointer;transition:all .2s;letter-spacing:1px;}
 .btn-green{border:1px solid var(--green)66;color:var(--green);}
 .btn-green:hover:not(:disabled){background:var(--green)11;border-color:var(--green);box-shadow:0 0 8px var(--green)33;}
 .btn-orange{border:1px solid var(--orange)66;color:var(--orange);}
@@ -112,23 +112,23 @@ body{background:var(--bg);color:var(--text);font-family:'Share Tech Mono',monosp
 /* Overlays */
 #overlay{position:absolute;inset:0;background:rgba(10,15,20,.9);display:none;flex-direction:column;align-items:center;justify-content:center;gap:16px;backdrop-filter:blur(3px);}
 #overlay.active{display:flex;}
-.ov-title{font-family:'Orbitron',sans-serif;font-size:28px;font-weight:900;letter-spacing:4px;}
-.ov-sub{font-size:12px;color:var(--dim);max-width:360px;text-align:center;line-height:1.6;}
+.ov-title{font-family:'Orbitron',sans-serif;font-size:38px;font-weight:900;letter-spacing:4px;}
+.ov-sub{font-size:16px;color:var(--dim);max-width:360px;text-align:center;line-height:1.6;}
 .ov-box{border-radius:8px;padding:16px 28px;text-align:center;max-width:400px;}
 .ov-cyan{border:1px solid var(--cyan);background:#00f5ff08;box-shadow:0 0 20px var(--cyan)22;}
 .ov-gold{border:1px solid var(--gold);background:#ffd70008;box-shadow:0 0 20px var(--gold)22;}
 .ov-red{border:1px solid var(--magenta);background:#ff006e08;box-shadow:0 0 20px var(--magenta)22;}
 
 /* Truco announcement */
-#truco-announce{position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);font-family:'Orbitron',sans-serif;font-size:32px;font-weight:900;color:var(--orange);text-shadow:0 0 24px var(--orange);pointer-events:none;display:none;animation:truco-pop .6s forwards;}
+#truco-announce{position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);font-family:'Orbitron',sans-serif;font-size:52px;font-weight:900;color:var(--orange);text-shadow:0 0 24px var(--orange);pointer-events:none;display:none;animation:truco-pop .6s forwards;}
 @keyframes truco-pop{0%{transform:translate(-50%,-50%) scale(.4);opacity:1;}60%{transform:translate(-50%,-50%) scale(1.2);}100%{transform:translate(-50%,-50%) scale(1);opacity:1;}}
 
 /* ── CONCEPT PANEL ── */
-.cpt-title{font-family:'Orbitron',sans-serif;font-size:9px;color:var(--green);padding:8px 10px 4px;border-bottom:1px solid #1e3a5f;letter-spacing:2px;}
-.concept-card{margin:6px 8px;border-radius:6px;padding:8px 10px;border-left:3px solid;font-size:9px;line-height:1.6;}
+.cpt-title{font-family:'Orbitron',sans-serif;font-size:13px;color:var(--green);padding:8px 10px 4px;border-bottom:1px solid #1e3a5f;letter-spacing:2px;}
+.concept-card{margin:6px 8px;border-radius:6px;padding:10px 12px;border-left:3px solid;font-size:13px;line-height:1.7;}
 .concept-card.active{animation:fade-in .4s;}
 @keyframes fade-in{from{opacity:0;transform:translateX(8px);}to{opacity:1;transform:none;}}
-.concept-card h4{font-size:9px;font-family:'Orbitron',sans-serif;letter-spacing:1px;margin-bottom:4px;}
+.concept-card h4{font-size:13px;font-family:'Orbitron',sans-serif;letter-spacing:1px;margin-bottom:4px;}
 .cpt-var{border-color:var(--cyan);background:#00f5ff08;}     .cpt-var h4{color:var(--cyan);}
 .cpt-op{border-color:var(--gold);background:#ffd70008;}      .cpt-op h4{color:var(--gold);}
 .cpt-logic{border-color:var(--purple);background:#a855f708;} .cpt-logic h4{color:var(--purple);}
@@ -139,8 +139,8 @@ body{background:var(--bg);color:var(--text);font-family:'Share Tech Mono',monosp
 .cpt-score{border-color:#fbbf24;background:#fbbf2408;}       .cpt-score h4{color:#fbbf24;}
 
 /* Log bar */
-#log{height:52px;background:var(--bg2);border-top:1px solid #1e3a5f;padding:4px 12px;overflow-y:auto;flex-shrink:0;}
-.log-line{font-size:9px;line-height:1.5;}
+#log{height:70px;background:var(--bg2);border-top:1px solid #1e3a5f;padding:4px 12px;overflow-y:auto;flex-shrink:0;}
+.log-line{font-size:13px;line-height:1.6;}
 .l-sys{color:var(--cyan);} .l-play{color:var(--green);} .l-bot{color:#f87171;}
 .l-win{color:var(--gold);} .l-truco{color:var(--orange);} .l-code{color:var(--purple);}
 
@@ -259,11 +259,11 @@ body{background:var(--bg);color:var(--text);font-family:'Share Tech Mono',monosp
         <div class="round-bar">
           <div class="round-info" id="round-label">RODADA 1 · MÃOS: 0/3</div>
           <div style="display:flex;gap:6px;align-items:center;">
-            <span style="font-size:9px;color:var(--dim);">APOSTA:</span>
-            <span id="bet-label" style="font-family:'Orbitron',sans-serif;font-size:13px;color:var(--orange);font-weight:700;">1 pt</span>
+            <span style="font-size:15px;color:var(--dim);">APOSTA:</span>
+            <span id="bet-label" style="font-family:'Orbitron',sans-serif;font-size:20px;color:var(--orange);font-weight:700;">1 pt</span>
           </div>
           <div>
-            <span style="font-size:9px;color:var(--dim);">BOT: </span>
+            <span style="font-size:15px;color:var(--dim);">BOT: </span>
             <span id="bot-lives" class="lives-row">♥♥♥</span>
           </div>
         </div>
@@ -325,7 +325,7 @@ body{background:var(--bg);color:var(--text);font-family:'Share Tech Mono',monosp
       </div>
     </div>
     <div class="cpt-title" style="margin-top:4px;">◈ TODOS OS CAPÍTULOS</div>
-    <div style="padding:6px 8px;display:flex;flex-direction:column;gap:3px;font-size:8px;">
+    <div style="padding:8px 10px;display:flex;flex-direction:column;gap:6px;font-size:13px;">
       <div style="color:var(--cyan)">Cap 11 · Variáveis</div>
       <div style="color:var(--gold)">Cap 12 · Operadores</div>
       <div style="color:var(--purple)">Cap 13 · Op. Lógicos</div>
@@ -489,8 +489,8 @@ function cardHTML(c, isHand=false, idx=0, played=false){
   const click = isHand && !played ? `onclick="jogarCarta(${idx})"` : '';
   const rank_pos = MANILHA_ORDER.indexOf(c.str) + 1;
   const manTag = isManilha
-    ? `<div style="position:absolute;top:2px;left:0;right:0;text-align:center;font-size:6px;font-family:'Orbitron',sans-serif;color:${meta.brd};letter-spacing:0.5px;text-shadow:0 0 4px ${meta.glow};">${meta.nome}</div>
-       <div style="position:absolute;bottom:2px;right:3px;font-size:7px;color:${meta.brd};font-weight:700;">#${rank_pos}</div>`
+    ? `<div style="position:absolute;top:2px;left:0;right:0;text-align:center;font-size:9px;font-family:'Orbitron',sans-serif;color:${meta.brd};letter-spacing:0.5px;text-shadow:0 0 4px ${meta.glow};">${meta.nome}</div>
+       <div style="position:absolute;bottom:3px;right:4px;font-size:10px;color:${meta.brd};font-weight:700;">#${rank_pos}</div>`
     : '';
   const glowStyle = isManilha ? `box-shadow:0 0 10px ${meta.glow}66,0 4px 12px #000a;border-width:2px;` : '';
   return `<div class="${cls}" style="background:${bg};border-color:${brd};${glowStyle}" ${click}>
@@ -1010,4 +1010,4 @@ function log(msg, cls='l-sys'){
 </html>
 """
 
-components.html(GAME, height=760, scrolling=False)
+components.html(GAME, height=820, scrolling=False)
