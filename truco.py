@@ -295,7 +295,7 @@ body{background:var(--bg);color:var(--text);font-family:'Share Tech Mono',monosp
       </div>
 
       <!-- OVERLAY -->
-      <div id="overlay">
+      <div id="overlay" class="active">
         <div class="ov-box ov-cyan">
           <div class="ov-title" style="color:var(--cyan)">🃏 TRUCO DIDÁTICO</div>
           <div class="ov-sub" style="margin-top:8px;">
@@ -997,4 +997,4 @@ function log(msg, cls='l-sys'){
 </html>
 """
 
-components.html(GAME, height=700, scrolling=False)
+components.html(GAME, height=760, scrolling=False)
