@@ -461,10 +461,25 @@ function embaralhar(arr){
 function forcaCarta(c){
   // Cap 12 — Operadores: cálculo de força
   // Cap 13 — Lógica: OR encadeado
-  const mi = MANILHA_ORDER.indexOf(c.str);
-  if(mi >= 0) return 100 - mi;  // manilha: força 100, 99, 98, 97
+
+  // Garante que c.str existe e está limpo (sem espaços ou chars invisíveis)
+  const str = (c.str || (c.rank + c.suit)).trim();
+
+  // Verifica manilha comparando rank E naipe separadamente para evitar
+  // problemas com encoding ou espaços invisíveis no str
+  const isZap       = c.rank === '4' && c.suit === '♣';
+  const isSetecopas = c.rank === '7' && c.suit === '♥';
+  const isEspadilha = c.rank === 'A' && c.suit === '♠';
+  const isSeteouros = c.rank === '7' && c.suit === '♦';
+
+  if(isZap)       return 100;  // 4♣  — Zap, o mais forte
+  if(isSetecopas) return 99;   // 7♥  — 7 de copas
+  if(isEspadilha) return 98;   // A♠  — Espadilha
+  if(isSeteouros) return 97;   // 7♦  — 7 de ouros
+
+  // Carta normal: busca no ranking
   const ri = RANK_ORDER.indexOf(c.rank);
-  if(ri >= 0) return 50 - ri;   // demais: 50 a 41
+  if(ri >= 0) return 50 - ri;   // 3=50, 2=49, A=48, K=47, J=46, Q=45, 7=44
   return 0;
 }
 
@@ -577,6 +592,9 @@ function jogarCarta(idx){
   carta_jogador = mao_jogador[idx];
   jogador_jogou = true;
 
+  // BUG FIX: remove a carta do array imediatamente (não pode jogar de novo!)
+  mao_jogador.splice(idx, 1);
+
   // Cap 16 — EVENTO: clique na carta
   document.getElementById('cv-event').textContent = `evento: carta ${carta_jogador.str} clicada`;
   highlightCode('code-event', 'Cap 16 — Evento disparado: jogarCarta()');
@@ -587,9 +605,8 @@ function jogarCarta(idx){
   const slotP = document.getElementById('slot-player');
   slotP.innerHTML = cardHTML(carta_jogador) + '<span class="slot-label">VOCÊ</span>';
 
-  // Remove da mão (visualmente)
+  // Re-renderiza mão sem a carta jogada
   renderUI();
-  document.getElementById('player-cards').children[idx]?.classList.add('played');
 
   // Cap 15 — PARA: bot escolhe carta (após delay curto)
   setTimeout(botJogar, 700);
@@ -668,9 +685,9 @@ function resolverMao(){
 
   if(venceu_rodada){
     setTimeout(()=>finalizarRodada(venceu_rodada), 800);
-  } else if(maos_jogadas >= 3 || mao_bot.length === 0){
-    // empatou tudo — quem ganhou 1ª mão vence
-    setTimeout(()=>finalizarRodada('empate_geral'), 800);
+  } else if(maos_jogadas >= 3 || mao_jogador.length === 0){
+    // todas as mãos jogadas sem vencedor claro
+    setTimeout(()=>finalizarRodada('empate'), 800);
   } else {
     // próxima mão
     setTimeout(()=>{
@@ -687,15 +704,32 @@ function resolverMao(){
 function verificarVitoriaRodada(){
   // Cap 14 — CONDICIONAIS aninhadas
   // Cap 13 — OPERADORES LÓGICOS (E, OU)
+  // Regras do truco: melhor de 3 mãos
+  // - Vence quem fizer 2 mãos
+  // - 1ª mão empatada: vence quem ganhar a 2ª
+  // - 2ª mão empatada: vence quem ganhou a 1ª
+  // - Tudo empatado: empate (meio-a-meio, sem ponto)
   highlightCode('code-logic','Cap 13 — Operadores Lógicos: verificando condição de vitória');
   showConcept('logic');
 
-  if(maos_jogador >= 2) return 'jogador';   // SE maos_jogador >= 2
-  if(maos_bot >= 2)     return 'bot';       // SE maos_bot >= 2
-  // Caso especial: 1ª mão decide em empates posteriores
-  if(maos_jogadas === 2 && maos_jogador === 1 && maos_bot === 0) return 'jogador';
-  if(maos_jogadas === 2 && maos_bot === 1 && maos_jogador === 0) return 'bot';
-  return null;
+  // Caso normal: 2 vitórias
+  if(maos_jogador >= 2) return 'jogador';
+  if(maos_bot >= 2)     return 'bot';
+
+  // Após 2ª mão: se alguém ganhou 1 e o outro 0 (a outra foi empate)
+  if(maos_jogadas === 2){
+    if(maos_jogador === 1 && maos_bot === 0) return 'jogador'; // ganhou 1ª, empatou 2ª
+    if(maos_bot === 1 && maos_jogador === 0) return 'bot';     // idem pro bot
+  }
+
+  // Após 3ª mão: quem tiver mais mãos vence
+  if(maos_jogadas === 3){
+    if(maos_jogador > maos_bot) return 'jogador';
+    if(maos_bot > maos_jogador) return 'bot';
+    return 'empate'; // 3 empates ou 1x1 com empate no meio
+  }
+
+  return null; // rodada ainda não decidida
 }
 
 // ============================================================
@@ -722,6 +756,8 @@ function finalizarRodada(venc){
     highlightCode('code-score', `Cap 18 — Pontuação: bot +${pts} pontos`);
     showConcept('score');
     log(`😔 Bot venceu a rodada ${rodada_atual}. Bot +${pts}. Total bot: ${pontos_bot}`, 'l-bot');
+  } else if(venc === 'empate'){
+    log(`🤝 Rodada ${rodada_atual} empatada. Nenhum ponto.`, 'l-sys');
   } else {
     log(`🤝 Rodada ${rodada_atual} empatada. Nenhum ponto.`, 'l-sys');
   }
